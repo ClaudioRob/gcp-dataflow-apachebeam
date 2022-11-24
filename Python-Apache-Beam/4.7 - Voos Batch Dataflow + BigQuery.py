@@ -3,12 +3,12 @@ import os
 from apache_beam.options.pipeline_options import PipelineOptions
 
 pipeline_options = {
-    'project': 'curso-dataflow-beam-315923' ,
+    'project': 'prj-gcp-dataflow-apachebeam' ,
     'runner': 'DataflowRunner',
     'region': 'southamerica-east1',
-    'staging_location': 'gs://curso-apache-beam/temp',
-    'temp_location': 'gs://curso-apache-beam/temp',
-    'template_location': 'gs://curso-apache-beam/template/batch_job_df_gcs_big_query',
+    'staging_location': 'gs://bkt-gcp-dataflow-beam/temp',
+    'temp_location': 'gs://bkt-gcp-dataflow-beam/temp',
+    'template_location': 'gs://bkt-gcp-dataflow-beam/template/batch_job_df_gcs_voos',
     'save_main_session' : True }
 
 pipeline_options = PipelineOptions.from_dictionary(pipeline_options)
