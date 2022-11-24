@@ -32,7 +32,7 @@ Qtd_Atrasos = (
 tabela_atrasos = (
     {'Qtd_Atrasos':Qtd_Atrasos,'Tempo_Atrasos':Tempo_Atrasos} 
     | "Group By" >> beam.CoGroupByKey()
-    | "Saida Para GCP" >> beam.io.WriteToText(r"gs://bkt-gcp-dataflow-beam/Voos_atrados_qtd.csv")
+    | "Saida Para GCP" >> beam.io.WriteToText(r"gs://bkt-gcp-dataflow-beam/qtde_voos_atrasados.csv")
 )
 
 p1.run()
