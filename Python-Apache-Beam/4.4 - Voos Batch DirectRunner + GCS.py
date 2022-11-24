@@ -1,7 +1,7 @@
 import apache_beam as beam
 import os
 
-serviceAccount = r"/home/claudio/udemy/gcp-dataflow-apachebeam/Paython-key-gcp/prj-gcp-dataflow-apachebeam-dd738740707b.json"
+serviceAccount = r"/home/claudio/udemy/gcp-dataflow-apachebeam/.gitignore/prj-gcp-dataflow-apachebeam-dd738740707b.json"
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = serviceAccount
 
 p1 = beam.Pipeline()
