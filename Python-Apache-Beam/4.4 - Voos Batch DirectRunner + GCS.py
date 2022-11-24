@@ -1,7 +1,7 @@
 import apache_beam as beam
 import os
 
-serviceAccount = r"/home/claudio/udemy/gcp-dataflow-apachebeam/.gitignore/prj-gcp-dataflow-apachebeam-dd738740707b.json"
+serviceAccount = r"/home/claudio/udemy/gcp-dataflow-apachebeam/.prj-gcp-dataflow-apachebeam-dd738740707b.json"
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = serviceAccount
 
 p1 = beam.Pipeline()
@@ -32,7 +32,7 @@ Qtd_Atrasos = (
 tabela_atrasos = (
     {'Qtd_Atrasos':Qtd_Atrasos,'Tempo_Atrasos':Tempo_Atrasos} 
     | "Group By" >> beam.CoGroupByKey()
-    | "Saida Para GCP" >> beam.io.WriteToText(r"gs://bkt-gcp-dataflow-beam/qtde_voos_atrasados.csv")
+    | "Saida Para GCP" >> beam.io.WriteToText(r"gs://bkt-gcp-dataflow-beam/Voos_atrados_qtd.csv")
 )
 
 p1.run()
