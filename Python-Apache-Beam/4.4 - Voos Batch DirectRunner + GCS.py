@@ -1,7 +1,7 @@
 import apache_beam as beam
 import os
 
-serviceAccount = r'C:\Users\cassi\Google Drive\GCP\Dataflow Course\Meu_Curso\curso-dataflow-beam-315923-4d903d955091.json'
+serviceAccount = r"/home/claudio/udemy/gcp-dataflow-apachebeam/Paython-key-gcp/prj-gcp-dataflow-apachebeam-dd738740707b.json"
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = serviceAccount
 
 p1 = beam.Pipeline()
@@ -13,7 +13,7 @@ class filtro(beam.DoFn):
 
 Tempo_Atrasos = (
   p1
-  | "Importar Dados Atraso" >> beam.io.ReadFromText(r"C:\Users\cassi\Google Drive\GCP\Dataflow Course\Meu_Curso\voos_sample.csv", skip_header_lines = 1)
+  | "Importar Dados Atraso" >> beam.io.ReadFromText(r"/home/claudio/udemy/gcp-dataflow-apachebeam/Python-Apache-Beam/voos_sample.csv", skip_header_lines = 1)
   | "Separar por Vírgulas Atraso" >> beam.Map(lambda record: record.split(','))
   | "Pegar voos com atraso" >> beam.ParDo(filtro())
   | "Criar par atraso" >> beam.Map(lambda record: (record[4],int(record[8])))
@@ -22,7 +22,7 @@ Tempo_Atrasos = (
 
 Qtd_Atrasos = (
   p1
-  | "Importar Dados" >> beam.io.ReadFromText(r"C:\Users\cassi\Google Drive\GCP\Dataflow Course\Meu_Curso\voos_sample.csv", skip_header_lines = 1)
+  | "Importar Dados" >> beam.io.ReadFromText(r"/home/claudio/udemy/gcp-dataflow-apachebeam/Python-Apache-Beam/voos_sample.csv", skip_header_lines = 1)
   | "Separar por Vírgulas Qtd" >> beam.Map(lambda record: record.split(','))
   | "Pegar voos com Qtd" >> beam.ParDo(filtro())
   | "Criar par Qtd" >> beam.Map(lambda record: (record[4],int(record[8])))
@@ -32,7 +32,7 @@ Qtd_Atrasos = (
 tabela_atrasos = (
     {'Qtd_Atrasos':Qtd_Atrasos,'Tempo_Atrasos':Tempo_Atrasos} 
     | "Group By" >> beam.CoGroupByKey()
-    | "Saida Para GCP" >> beam.io.WriteToText(r"gs://curso-apache-beam/Voos_atrados_qtd.csv")
+    | "Saida Para GCP" >> beam.io.WriteToText(r"gs://bkt-gcp-dataflow-beam/Voos_atrados_qtd.csv")
 )
 
 p1.run()
