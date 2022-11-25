@@ -13,7 +13,7 @@ pipeline_options = {
 pipeline_options = PipelineOptions.from_dictionary(pipeline_options)
 p1 = beam.Pipeline(options=pipeline_options)
 
-serviceAccount = r'/home/claudio/udemy/gcp-dataflow-apachebeam/.prj-gcp-dataflow-apachebeam-dd738740707b.json'
+serviceAccount = r'/home/claudio/udemy/gcp-dataflow-apachebeam/prj-gcp-dataflow-apachebeam-dd738740707b.json'
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= serviceAccount
 
 class filtro(beam.DoFn):
