@@ -8,13 +8,13 @@ pipeline_options = {
     'region': 'southamerica-east1',
     'staging_location': 'gs://bkt-gcp-dataflow-beam/temp',
     'temp_location': 'gs://bkt-gcp-dataflow-beam/temp',
-    'template_location': 'gs://bkt-gcp-dataflow-beam/template/batch_job_df_gcs_voos',
+    'template_location': 'gs://bkt-gcp-dataflow-beam/template/batch_job_df_gcs_big_query',
     'save_main_session' : True }
 
 pipeline_options = PipelineOptions.from_dictionary(pipeline_options)
 p1 = beam.Pipeline(options=pipeline_options)
 
-serviceAccount = r'C:\Users\cassi\Google Drive\GCP\Dataflow Course\Meu_Curso\curso-dataflow-beam-315923-4d903d955091.json'
+serviceAccount = r'/home/claudio/udemy/gcp-dataflow-apachebeam/prj-gcp-dataflow-apachebeam-dd738740707b.json'
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= serviceAccount
 
 class filtro(beam.DoFn):
@@ -45,11 +45,11 @@ def criar_dict_nivel0(record):
     return(dict_)
 
 table_schema = 'airport:STRING, lista_Qtd_Atrasos:INTEGER, lista_Tempo_Atrasos:INTEGER'
-tabela = 'curso-dataflow-beam-315923:curso_dataflow_voos.curso_dataflow_voos_atraso'
+tabela = 'prj-gcp-dataflow-apachebeam.bqgcpdataflowvoos.curso_dataflow_voos_atraso'
 
 Tempo_Atrasos = (
   p1
-  | "Importar Dados Atraso" >> beam.io.ReadFromText(r"gs://curso-apache-beam/entrada/voos_sample.csv", skip_header_lines = 1)
+  | "Importar Dados Atraso" >> beam.io.ReadFromText(r"gs://bkt-gcp-dataflow-beam/entrada/voos_sample.csv", skip_header_lines = 1)
   | "Separar por Vírgulas Atraso" >> beam.Map(lambda record: record.split(','))
   | "Pegar voos com atraso" >> beam.ParDo(filtro())
   | "Criar par atraso" >> beam.Map(lambda record: (record[4],int(record[8])))
@@ -58,7 +58,7 @@ Tempo_Atrasos = (
 
 Qtd_Atrasos = (
   p1
-  | "Importar Dados" >> beam.io.ReadFromText(r"gs://curso-apache-beam/entrada/voos_sample.csv", skip_header_lines = 1)
+  | "Importar Dados" >> beam.io.ReadFromText(r"gs://bkt-gcp-dataflow-beam/entrada/voos_sample.csv", skip_header_lines = 1)
   | "Separar por Vírgulas Qtd" >> beam.Map(lambda record: record.split(','))
   | "Pegar voos com Qtd" >> beam.ParDo(filtro())
   | "Criar par Qtd" >> beam.Map(lambda record: (record[4],int(record[8])))
@@ -76,7 +76,7 @@ tabela_atrasos = (
                               schema=table_schema,
                               write_disposition=beam.io.BigQueryDisposition.WRITE_APPEND,
                               create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
-                              custom_gcs_temp_location = 'gs://curso-apache-beam/temp' )
+                              custom_gcs_temp_location = 'gs://bkt-gcp-dataflow-beam/temp' )
 
 )
 
